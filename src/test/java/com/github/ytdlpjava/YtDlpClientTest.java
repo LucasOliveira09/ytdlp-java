@@ -24,4 +24,17 @@ class YtDlpClientTest {
         assertThat(client.getYtDlpPath()).isEqualTo("/usr/bin/yt-dlp");
         assertThat(client.getFfmpegPath()).isEqualTo("/usr/bin/ffmpeg");
     }
+
+    @Test
+    @DisplayName("Should create YtDlpMetadata record correctly")
+    void shouldCreateMetadataRecord() {
+        YtDlpMetadata metadata = new YtDlpMetadata("Title", "Author", 120, "http://thumb.jpg", "Desc", 1000L);
+
+        assertThat(metadata.title()).isEqualTo("Title");
+        assertThat(metadata.uploader()).isEqualTo("Author");
+        assertThat(metadata.durationSeconds()).isEqualTo(120);
+        assertThat(metadata.thumbnailUrl()).isEqualTo("http://thumb.jpg");
+        assertThat(metadata.description()).isEqualTo("Desc");
+        assertThat(metadata.viewCount()).isEqualTo(1000L);
+    }
 }

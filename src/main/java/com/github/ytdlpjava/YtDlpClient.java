@@ -95,6 +95,22 @@ public class YtDlpClient {
         return response.stdOut().trim();
     }
 
+    /**
+     * Fetches metadata for a given URL without downloading the media file.
+     *
+     * @param url Target media URL
+     * @return Raw JSON output string containing video metadata
+     */
+    public String extractMetadataJson(String url) {
+        YtDlpRequest request = YtDlpRequest.builder()
+                .url(url)
+                .addExtraArg("--dump-json")
+                .addExtraArg("--no-download")
+                .build();
+        YtDlpResponse response = execute(request);
+        return response.stdOut();
+    }
+
     public String getYtDlpPath() {
         return ytDlpPath;
     }
