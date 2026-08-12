@@ -37,4 +37,12 @@ class YtDlpClientTest {
         assertThat(metadata.description()).isEqualTo("Desc");
         assertThat(metadata.viewCount()).isEqualTo(1000L);
     }
+
+    @Test
+    @DisplayName("Should return false when yt-dlp binary is not installed/found")
+    void shouldReturnFalseWhenYtDlpNotAvailable() {
+        YtDlpClient client = YtDlpClient.custom("non_existent_ytdlp_binary_12345", null);
+
+        assertThat(client.isYtDlpAvailable()).isFalse();
+    }
 }

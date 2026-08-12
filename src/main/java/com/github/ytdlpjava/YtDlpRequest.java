@@ -25,6 +25,8 @@ public final class YtDlpRequest {
     private final boolean writeJsonMetadata;
     private final boolean noPlaylist;
     private final boolean restrictFilenames;
+    private final String cookiesFromBrowser;
+    private final Path cookiesFile;
     private final List<String> extraArgs;
 
     private YtDlpRequest(Builder builder) {
@@ -41,6 +43,8 @@ public final class YtDlpRequest {
         this.writeJsonMetadata = builder.writeJsonMetadata;
         this.noPlaylist = builder.noPlaylist;
         this.restrictFilenames = builder.restrictFilenames;
+        this.cookiesFromBrowser = builder.cookiesFromBrowser;
+        this.cookiesFile = builder.cookiesFile;
         this.extraArgs = Collections.unmodifiableList(new ArrayList<>(builder.extraArgs));
     }
 
@@ -102,6 +106,14 @@ public final class YtDlpRequest {
 
     public boolean isRestrictFilenames() {
         return restrictFilenames;
+    }
+
+    public String getCookiesFromBrowser() {
+        return cookiesFromBrowser;
+    }
+
+    public Path getCookiesFile() {
+        return cookiesFile;
     }
 
     public List<String> getExtraArgs() {
@@ -171,6 +183,16 @@ public final class YtDlpRequest {
             cmd.add("--restrict-filenames");
         }
 
+        if (cookiesFromBrowser != null && !cookiesFromBrowser.isBlank()) {
+            cmd.add("--cookies-from-browser");
+            cmd.add(cookiesFromBrowser);
+        }
+
+        if (cookiesFile != null) {
+            cmd.add("--cookies");
+            cmd.add(cookiesFile.toAbsolutePath().toString());
+        }
+
         cmd.addAll(extraArgs);
         cmd.add(url);
 
@@ -191,6 +213,8 @@ public final class YtDlpRequest {
         private boolean writeJsonMetadata = false;
         private boolean noPlaylist = false;
         private boolean restrictFilenames = false;
+        private String cookiesFromBrowser;
+        private Path cookiesFile;
         private final List<String> extraArgs = new ArrayList<>();
 
         public Builder url(String url) {
@@ -255,6 +279,16 @@ public final class YtDlpRequest {
 
         public Builder restrictFilenames(boolean restrictFilenames) {
             this.restrictFilenames = restrictFilenames;
+            return this;
+        }
+
+        public Builder cookiesFromBrowser(String browser) {
+            this.cookiesFromBrowser = browser;
+            return this;
+        }
+
+        public Builder cookiesFile(Path cookiesFile) {
+            this.cookiesFile = cookiesFile;
             return this;
         }
 
