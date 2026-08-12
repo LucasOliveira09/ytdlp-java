@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.LucasOliveira09"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()

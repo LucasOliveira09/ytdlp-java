@@ -12,7 +12,7 @@
   <p>
     <img src="https://img.shields.io/badge/Java-21%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21+"/>
     <img src="https://img.shields.io/badge/Virtual_Threads-Supported-8A2BE2?style=for-the-badge&logo=java" alt="Virtual Threads"/>
-    <a href="https://jitpack.io/#LucasOliveira09/ytdlp-java"><img src="https://img.shields.io/badge/JitPack-v1.0.0-success?style=for-the-badge&logo=apache-maven&logoColor=white" alt="JitPack"/></a>
+    <a href="https://jitpack.io/#LucasOliveira09/ytdlp-java"><img src="https://img.shields.io/badge/JitPack-v1.1.0-success?style=for-the-badge&logo=apache-maven&logoColor=white" alt="JitPack"/></a>
     <img src="https://img.shields.io/badge/License-MIT-007ACC?style=for-the-badge" alt="License MIT"/>
     <img src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions"/>
   </p>
@@ -54,10 +54,11 @@
 | Feature | Description |
 | :--- | :--- |
 | ⚡ **Virtual Threads (Loom)** | Non-blocking process stream ingestion using Java 21 `Executors.newVirtualThreadPerTaskExecutor()`. |
-| 🎯 **Fluent Builder API** | Clean, immutable `YtDlpRequest` builder for full control over CLI parameters. |
+| 🚀 **Zero-Setup Installer** | `client.ensureInstalled()` automatically downloads official `yt-dlp` executable matching host OS. |
+| 🎯 **Fluent Builder API** | Clean, immutable `YtDlpRequest` builder for full control over CLI parameters & cookies. |
 | 🔄 **Real-Time Progress** | Reactive callback listener delivering percentage, download speed, and ETA updates. |
 | 🎵 **Audio Extraction** | Native FFmpeg audio processing (`MP3`, `AAC`, `FLAC`, `WAV`, custom quality presets). |
-| 📦 **Zero External Runtime Deps** | Pure Java stdlib implementation over OS `ProcessBuilder`. |
+| 🔍 **Fast Metadata Reader** | Fetch video info without downloading media using `extractMetadataJson(url)`. |
 | 🛡️ **Robust Error Handling** | Typed custom exceptions (`YtDlpNotFoundException`, `YtDlpExecutionException`). |
 
 ---
@@ -67,12 +68,13 @@
 ```mermaid
 graph TD
     A[Java Application] -->|YtDlpRequest| B[YtDlpClient Facade]
-    B -->|Async/Sync| C[YtDlpProcessExecutor]
-    C -->|Java 21 Virtual Threads| D[OS ProcessBuilder]
-    D -->|Stream STDOUT/STDERR| E[Regex Progress Parser]
-    E -->|Real-time Callbacks| F[YtDlpCallback Listener]
-    D -->|CLI Execution| G[yt-dlp / FFmpeg]
-    G -->|Output Files| H[Local Storage .mp4/.mp3]
+    B -->|ensureInstalled| C[YtDlpInstaller]
+    B -->|Async/Sync| D[YtDlpProcessExecutor]
+    D -->|Java 21 Virtual Threads| E[OS ProcessBuilder]
+    E -->|Stream STDOUT/STDERR| F[Regex Progress Parser]
+    F -->|Real-time Callbacks| G[YtDlpCallback Listener]
+    E -->|CLI Execution| H[yt-dlp / FFmpeg]
+    H -->|Output Files| I[Local Storage .mp4/.mp3]
 ```
 
 ---
@@ -87,7 +89,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.LucasOliveira09:ytdlp-java:1.0.0")
+    implementation("com.github.LucasOliveira09:ytdlp-java:1.1.0")
 }
 ```
 
@@ -99,7 +101,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.LucasOliveira09:ytdlp-java:1.0.0'
+    implementation 'com.github.LucasOliveira09:ytdlp-java:1.1.0'
 }
 ```
 
@@ -115,7 +117,7 @@ dependencies {
 <dependency>
     <groupId>com.github.LucasOliveira09</groupId>
     <artifactId>ytdlp-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -123,9 +125,10 @@ dependencies {
 
 ### 💻 Quick Start
 
-#### 1️⃣ Basic Synchronous Download
+#### 1️⃣ Basic Download with Zero-Setup Auto Installer
 ```java
-YtDlpClient client = YtDlpClient.defaultClient();
+// Automatically downloads yt-dlp binary if not installed on OS
+YtDlpClient client = YtDlpClient.defaultClient().ensureInstalled();
 
 YtDlpRequest request = YtDlpRequest.builder()
         .url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
@@ -138,7 +141,7 @@ System.out.println("Status: " + response.exitCode() + " | Time: " + response.ela
 
 #### 2️⃣ Asynchronous with Live Progress Updates
 ```java
-YtDlpClient client = YtDlpClient.defaultClient();
+YtDlpClient client = YtDlpClient.defaultClient().ensureInstalled();
 
 YtDlpRequest request = YtDlpRequest.builder()
         .url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
@@ -166,18 +169,21 @@ A `ytdlp-java` conecta o ecossistema Java à ferramenta de download de mídias m
 | Recursos | Descrição |
 | :--- | :--- |
 | ⚡ **Virtual Threads (Loom)** | Leitura não-bloqueante de processos usando `Executors.newVirtualThreadPerTaskExecutor()`. |
-| 🎯 **Fluent Builder API** | Construtor imutável `YtDlpRequest` para controle total dos parâmetros CLI. |
+| 🚀 **Instalação Zero-Setup** | `client.ensureInstalled()` baixa o binário oficial do `yt-dlp` automaticamente. |
+| 🎯 **Fluent Builder API** | Construtor imutável `YtDlpRequest` para controle de parâmetros, cookies e formatos. |
 | 🔄 **Progresso em Tempo Real** | Callback reativo com porcentagem, velocidade de download e tempo estimado (ETA). |
 | 🎵 **Extração de Áudio** | Processamento nativo via FFmpeg (`MP3`, `AAC`, `FLAC`, `WAV` e qualidades ajustáveis). |
-| 📦 **Zero Dependências Externas** | Implementação em Java puro sobre o `ProcessBuilder` nativo do SO. |
+| 🔍 **Leitor de Metadados** | Extraia títulos, autores e capas em JSON sem precisar baixar a mídia (`extractMetadataJson`). |
 | 🛡️ **Exceções Tipadas** | Tratamento robusto de erros com `YtDlpNotFoundException` e `YtDlpExecutionException`. |
 
 ---
 
 ### 💻 Exemplos Práticos
 
-#### 1️⃣ Baixar Mídia em Áudio (MP3 em Alta Qualidade)
+#### 1️⃣ Baixar Mídia em Áudio (MP3 em Alta Qualidade com Auto-Installer)
 ```java
+YtDlpClient client = YtDlpClient.defaultClient().ensureInstalled();
+
 YtDlpRequest request = YtDlpRequest.builder()
         .url("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
         .outputDir(Path.of("./musicas"))
@@ -187,15 +193,14 @@ YtDlpRequest request = YtDlpRequest.builder()
         .extractThumbnail(true) // Baixa também a capa
         .build();
 
-YtDlpResponse response = YtDlpClient.defaultClient().execute(request);
+YtDlpResponse response = client.execute(request);
 ```
 
-#### 2️⃣ Usando executáveis em caminhos customizados
+#### 2️⃣ Suporte a Cookies (Vídeos Privados ou Restritos)
 ```java
-YtDlpClient client = YtDlpClient.custom(
-    "C:\\ferramentas\\yt-dlp.exe", 
-    "C:\\ferramentas\\ffmpeg.exe"
-);
+YtDlpClient client = YtDlpClient.builder()
+        .defaultCookiesFromBrowser("chrome") // Lê cookies do Chrome
+        .build();
 
 YtDlpResponse response = client.execute(request);
 ```
@@ -208,7 +213,7 @@ YtDlpResponse response = client.execute(request);
 - [x] Real-time progress parsing regex engine
 - [x] Audio extraction & FFmpeg integration
 - [x] JitPack publication configuration
-- [ ] Built-in automatic `yt-dlp` binary downloader/updater
+- [x] Built-in automatic `yt-dlp` binary downloader (`ensureInstalled`)
 - [ ] Spring Boot Starter module (`ytdlp-spring-boot-starter`)
 
 Contributions are warmly welcomed! Please feel free to submit a Pull Request or open an Issue.
