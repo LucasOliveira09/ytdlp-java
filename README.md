@@ -1,8 +1,8 @@
 <div align="center">
 
-  <h1>⚡ ytdlp-java</h1>
+  <h1>⚡ ytdlp-java (ytdlp4j)</h1>
   <p><b>A next-generation, high-performance Java 21 wrapper for <code>yt-dlp</code> & <code>FFmpeg</code>.</b></p>
-  <p><i>Uma biblioteca Java 21 de alta performance e assíncrona para <code>yt-dlp</code> e <code>FFmpeg</code>.</i></p>
+  <p><i>(Also known as <b>ytdlp4j</b> / <b>yt-dlp for Java</b>) — Uma biblioteca Java 21 de alta performance e assíncrona para <code>yt-dlp</code> e <code>FFmpeg</code>.</i></p>
 
   <p>
     <a href="#-english"><img src="https://img.shields.io/badge/Language-English%20%F0%9F%87%BA%F0%9F%87%B8-blue?style=for-the-badge" alt="English"/></a>
@@ -31,15 +31,16 @@
   - [Funcionalidades](#-funcionalidades)
   - [Como Instalar no seu Projeto](#-como-instalar-no-seu-projeto)
   - [Exemplos Práticos](#-exemplos-práticos)
+- [Alphabetical Keywords / SEO](#-seo--keywords)
 - [🛣️ Roadmap & Contributing](#%EF%B8%8F-roadmap--contributing)
 
 ---
 
 # 🇺🇸 English
 
-### 🌟 Why `ytdlp-java`?
+### 🌟 Why `ytdlp-java` (`ytdlp4j`)?
 
-`ytdlp-java` bridges the gap between Java applications and the world's most powerful media downloader tool, `yt-dlp`. Built from scratch leveraging **Java 21 Virtual Threads**, it allows you to download, convert, and inspect videos or audio from over 1,000+ platforms effortlessly.
+`ytdlp-java` (also affectionately referred to as **`ytdlp4j`** following Java community conventions) bridges the gap between Java applications and the world's most powerful media downloader tool, `yt-dlp`. Built from scratch leveraging **Java 21 Virtual Threads**, it allows you to download, convert, and inspect videos or audio from over 1,000+ platforms effortlessly.
 
 ```
 +-------------------------------------------------------------------------+
@@ -159,9 +160,9 @@ client.executeAsync(request, (percent, speed, eta, status) -> {
 
 # 🇧🇷 Português
 
-### 🌟 Por que usar a `ytdlp-java`?
+### 🌟 Por que usar a `ytdlp-java` (`ytdlp4j`)?
 
-A `ytdlp-java` conecta o ecossistema Java à ferramenta de download de mídias mais poderosa do mundo, o `yt-dlp`. Construída do zero aproveitando **Virtual Threads do Java 21**, ela permite que você baixe, converta e inspecione áudios e vídeos de mais de 1.000 plataformas com facilidade.
+A `ytdlp-java` (também carinhosamente chamada de **`ytdlp4j`** seguindo as convenções clássicas de bibliotecas Java como *log4j*, *discord4j* e *twitter4j*) conecta o ecossistema Java à ferramenta de download de mídias mais poderosa do mundo, o `yt-dlp`. Construída do zero aproveitando **Virtual Threads do Java 21**, ela permite que você baixe, converta e inspecione áudios e vídeos de mais de 1.000 plataformas com facilidade.
 
 ### ✨ Funcionalidades
 
@@ -250,6 +251,12 @@ YtDlpClient client = YtDlpClient.builder()
 
 YtDlpResponse response = client.execute(request);
 ```
+
+---
+
+### 🔍 SEO & Keywords
+
+`ytdlp4j` • `ytdlp-java` • `yt-dlp for java` • `youtube downloader java` • `java video downloader` • `yt-dlp java wrapper` • `ffmpeg java` • `virtual threads java 21`
 
 ---
 
