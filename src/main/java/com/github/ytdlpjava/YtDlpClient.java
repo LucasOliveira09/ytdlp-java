@@ -118,4 +118,19 @@ public class YtDlpClient {
     public String getFfmpegPath() {
         return ffmpegPath;
     }
+
+    /**
+     * Ensures that the yt-dlp binary is available on the system.
+     * If yt-dlp is not accessible, automatically downloads the official executable for the current OS.
+     *
+     * @return YtDlpClient instance pointing to the verified or newly installed binary
+     */
+    public YtDlpClient ensureInstalled() {
+        if (!isYtDlpAvailable()) {
+            var installer = com.github.ytdlpjava.installer.YtDlpInstaller.defaultInstaller();
+            var installedPath = installer.install();
+            return new YtDlpClient(installedPath.toString(), this.ffmpegPath);
+        }
+        return this;
+    }
 }
