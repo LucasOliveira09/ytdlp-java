@@ -29,8 +29,7 @@
   - [Quick Start](#-quick-start)
 - [🇧🇷 Documentação em Português](#-português)
   - [Funcionalidades](#-funcionalidades)
-  - [Visão Geral da Arquitetura](#-visão-geral-da-arquitetura)
-  - [Instalação](#-instalação)
+  - [Como Instalar no seu Projeto](#-como-instalar-no-seu-projeto)
   - [Exemplos Práticos](#-exemplos-práticos)
 - [🛣️ Roadmap & Contributing](#%EF%B8%8F-roadmap--contributing)
 
@@ -178,10 +177,57 @@ A `ytdlp-java` conecta o ecossistema Java à ferramenta de download de mídias m
 
 ---
 
+### 📦 Como Instalar no seu Projeto Java
+
+Para adicionar a biblioteca ao seu projeto Java (Spring Boot, Quarkus, JavaFX, CLI ou Bot), adicione o repositório **JitPack** e a dependência de acordo com a ferramenta que você usa:
+
+#### 🐘 Se você usa Gradle (Kotlin DSL - `build.gradle.kts`):
+```kotlin
+repositories {
+    mavenCentral()
+    maven { url = uri("https://jitpack.io") }
+}
+
+dependencies {
+    implementation("com.github.LucasOliveira09:ytdlp-java:1.1.0")
+}
+```
+
+#### 🐘 Se você usa Gradle (Groovy DSL - `build.gradle`):
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.LucasOliveira09:ytdlp-java:1.1.0'
+}
+```
+
+#### 📦 Se você usa Maven (`pom.xml`):
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.LucasOliveira09</groupId>
+    <artifactId>ytdlp-java</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
+
+---
+
 ### 💻 Exemplos Práticos
 
 #### 1️⃣ Baixar Mídia em Áudio (MP3 em Alta Qualidade com Auto-Installer)
 ```java
+// O ensureInstalled() baixa o yt-dlp automaticamente se o usuário não tiver!
 YtDlpClient client = YtDlpClient.defaultClient().ensureInstalled();
 
 YtDlpRequest request = YtDlpRequest.builder()
@@ -189,17 +235,17 @@ YtDlpRequest request = YtDlpRequest.builder()
         .outputDir(Path.of("./musicas"))
         .audioOnly(true)       // Baixa apenas o áudio
         .audioFormat("mp3")    // Converte para MP3
-        .audioQuality("0")     // Qualidade máxima
+        .audioQuality("0")     // Qualidade máxima (0 a 9)
         .extractThumbnail(true) // Baixa também a capa
         .build();
 
 YtDlpResponse response = client.execute(request);
 ```
 
-#### 2️⃣ Suporte a Cookies (Vídeos Privados ou Restritos)
+#### 2️⃣ Suporte a Cookies (Para Vídeos Privados ou com Restrição de Idade)
 ```java
 YtDlpClient client = YtDlpClient.builder()
-        .defaultCookiesFromBrowser("chrome") // Lê cookies do Chrome
+        .defaultCookiesFromBrowser("chrome") // Lê os cookies do navegador Chrome
         .build();
 
 YtDlpResponse response = client.execute(request);
