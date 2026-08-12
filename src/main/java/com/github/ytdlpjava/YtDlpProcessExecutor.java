@@ -43,6 +43,10 @@ public class YtDlpProcessExecutor {
 
         ProcessBuilder pb = new ProcessBuilder(command);
         if (workingDirectory != null) {
+            try {
+                Files.createDirectories(workingDirectory);
+            } catch (IOException ignored) {
+            }
             pb.directory(workingDirectory.toFile());
         }
 
